@@ -5,9 +5,13 @@ pipeline {
   agent any
   stages {
     stage("Build") {
+        when {
+          expression {
+              BRANCH_NAME == 'dev' && CODE_CHANGES == true
+          }
+        }
       steps {
         echo "Build stage"
-        sh './gradlew -v'
       }
     }
     stage("Test") {
