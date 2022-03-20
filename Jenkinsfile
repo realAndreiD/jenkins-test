@@ -1,9 +1,13 @@
 pipeline {
+  tools {
+    gradle 'Gradle'  
+  }
   agent any
   stages {
     stage("Build") {
       steps {
         echo "Build stage"
+        sh './gradlew -v'
       }
     }
     stage("Test") {
