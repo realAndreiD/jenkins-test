@@ -1,18 +1,20 @@
-CODE_CHANGES = true
 pipeline {
   tools {
     gradle 'Gradle'  
   }
   agent any
+  environment {
+      NEW_VERSION = '1.3.0'
+  }
   stages {
     stage("Build") {
         when {
           expression {
-              BRANCH_NAME == 'dev' && CODE_CHANGES == true
+              ${NEW_VERSION} == '1.3.0'
           }
         }
       steps {
-        echo "Build stage"
+        echo "Build stage for version ${NEW_VERSION}"
       }
     }
     stage("Test") {
