@@ -8,7 +8,7 @@ pipeline {
       SERVER_CREDENTIALS = credentials('my-credentials')
   }
   parameters {
-      string(name:'VERSION', defaultValue:'1.0', description:'something')
+      string(name:'TITLE', defaultValue:'my-app', description:'something')
       choice(name: 'VERSION', choices: ['1.1.0', '1.2.0', '1.3.0'], description: 'somthing')
       booleanParam(name: 'executeTests', defaultValue: true, description: 'somethiing')
   }
@@ -35,7 +35,7 @@ pipeline {
     }
     stage("Deploy") {
       steps {
-        echo "Deploy stage"
+        echo "Deploy stage for version ${params.VERSION}"
       }
     }  
   }
