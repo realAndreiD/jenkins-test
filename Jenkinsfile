@@ -1,4 +1,4 @@
-define gv
+def gv
 pipeline {
   tools {
     gradle 'Gradle'  
