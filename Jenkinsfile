@@ -7,6 +7,11 @@ pipeline {
       NEW_VERSION = '1.3.0'
       SERVER_CREDENTIALS = credentials('my-credentials')
   }
+  parameters {
+      string(name:'VERSION', defaultValue:'1.0', description:'something')
+      choice(name: 'VERSION', choices: ['1.1.0', '1.2.0', '1.3.0'], description: 'somthing')
+      booleanParam(name: 'executeTests', defaultValue: true, description: 'somethiing')
+  }
   stages {
     stage("Build") {
         when {
@@ -19,13 +24,13 @@ pipeline {
       }
     }
     stage("Test") {
+      when {
+          expression {
+              params.executeTests == true
+          }
+      }
       steps {
-        echo "Test stage 2"
-        withCredentials([
-            usernamePassword(credentials:'my-credentials', usernameVariable: USER, passwordVariable: PWD)
-        ]) {
-            echo "${USER} and ${PWD}"
-        }
+        echo "Test stage 2 executed"
       }  
     }
     stage("Deploy") {
