@@ -1,3 +1,4 @@
+define gv
 pipeline {
   tools {
     gradle 'Gradle'  
@@ -13,6 +14,13 @@ pipeline {
       booleanParam(name: 'executeTests', defaultValue: true, description: 'somethiing')
   }
   stages {
+    stage("Init") {
+        steps {
+            script {
+                gv = load "script.groovy"
+            }
+        }
+    }
     stage("Build") {
         when {
           expression {
@@ -20,7 +28,9 @@ pipeline {
           }
         }
       steps {
-        echo "Build stage for version ${NEW_VERSION}"
+          script {
+              gv.buildApp()
+          }
       }
     }
     stage("Test") {
@@ -30,12 +40,16 @@ pipeline {
           }
       }
       steps {
-        echo "Test stage 2 executed"
+          script {
+              gv.testApp()
+          }
       }  
     }
     stage("Deploy") {
       steps {
-        echo "Deploy stage for version ${params.VERSION}"
+        script {
+            deployApp()
+        }
       }
     }  
   }
