@@ -10,7 +10,7 @@ pipeline {
     stage("Build") {
         when {
           expression {
-              //${NEW_VERSION} == '1.3.0'
+              GIT_BRANCH == 'main'
           }
         }
       steps {
